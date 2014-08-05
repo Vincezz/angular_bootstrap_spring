@@ -1,4 +1,4 @@
-package au.com.example.mvc.contoller;
+package au.com.example.api.contoller;
 
 import org.junit.Before;
 import org.junit.Test;

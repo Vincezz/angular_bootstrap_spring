@@ -1,6 +1,6 @@
 package au.com.example.service;
 
-import au.com.example.mvc.model.customer.Customer;
+import au.com.example.api.model.customer.Customer;
 import au.com.example.persistence.dao.CustomerDao;
 import org.junit.Assert;
 import org.junit.Before;

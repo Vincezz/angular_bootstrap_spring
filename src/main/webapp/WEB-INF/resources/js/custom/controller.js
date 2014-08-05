@@ -1,12 +1,6 @@
-app.controller('MainController', function ($scope, $rootScope, $location, AuthenticationService) {
+app.controller('MainController', function ($scope) {
 	$scope.logout = function () {
 		$scope.$emit('event:logoutRequest');
-		
-        AuthenticationService.logout().then(function() {
-        	$rootScope.user = null;
-            $scope.username = $scope.password = null;
-            $location.path('/main');
-        });
     };
 });
 
@@ -35,7 +29,7 @@ app.controller('CustomerController', function ($scope, CustomerService) {
     };
 
     $scope.save = function(id) {
-        angular.forEach($scope.customers, function(customer, index) {
+        angular.forEach($scope.customers, function(customer) {
             if(id == customer.id) {
                 CustomerService.saveCustomer(customer).then(function(response) {
                     if(response) {
@@ -50,9 +44,9 @@ app.controller('CustomerController', function ($scope, CustomerService) {
     };
 });
 
-app.controller('LoginController', function($scope, $location) {
+app.controller('LoginController', function($rootScope, $scope, $location) {
 	$scope.login = function () {
 		$scope.$emit('event:loginRequest', $scope.username, $scope.password);
-		$location.path(originalLocation);
+		$location.path($rootScope.navigateTo);
     };
 });

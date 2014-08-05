@@ -1,6 +1,6 @@
 package au.com.example.service;
 
-import au.com.example.mvc.model.customer.Customer;
+import au.com.example.api.model.customer.Customer;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package au.com.example.persistence.dao;
 
 import au.com.example.exception.UpdateDeleteException;
-import au.com.example.mvc.model.customer.Customer;
+import au.com.example.api.model.customer.Customer;
 import au.com.example.persistence.dao.entity.CustomerEntity;
 import au.com.example.persistence.dao.query.SelectCustomer;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package au.com.example.mvc.controller.user;
+package au.com.example.api.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,7 +16,7 @@ public class UserController {
 	@Autowired
 	private UserDetailsService userService;
 
-	@RequestMapping(value = "/authenticated/retrieve", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/authenticated", method = RequestMethod.GET, produces = "application/json")
 	public UserDetails authenticatedUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
@@ -25,10 +25,5 @@ public class UserController {
 		}
 
 		return (UserDetails)authentication.getPrincipal();
-	}
-	
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST, produces = "application/json")
-	public void authenticate() {
-		// endpoint for the basic authentication request to pass
 	}
 }

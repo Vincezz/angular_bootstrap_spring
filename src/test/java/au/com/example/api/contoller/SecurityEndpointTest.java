@@ -1,4 +1,4 @@
-package au.com.example.mvc.contoller;
+package au.com.example.api.contoller;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,6 +1,6 @@
-package au.com.example.mvc.controller.customer;
+package au.com.example.api.controller.customer;
 
-import au.com.example.mvc.model.customer.Customer;
+import au.com.example.api.model.customer.Customer;
 import au.com.example.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

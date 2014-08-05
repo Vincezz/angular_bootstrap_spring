@@ -31,6 +31,17 @@ app.service('CustomerService', function($http, $q) {
 });
 
 app.service('AuthenticationService', function($http, $q) {
+    this.getAuthenticated = function () {
+        var d = $q.defer();
+
+        $http.get('user/authenticated')
+            .success(function (data) {
+                d.resolve(data);
+            });
+
+        return d.promise;
+    };
+
 	this.logout = function() {
 		var d = $q.defer();
 		

@@ -1,4 +1,4 @@
-package au.com.example.mvc.model.customer;
+package au.com.example.api.model.customer;
 
 public class Customer {
 

@@ -1,20 +1,17 @@
-var httpHeaders;
-var originalLocation = "/main";
-
 app.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
 	
 	// ======= router configuration
 	$routeProvider
 		.when('/main', {
-			templateUrl: 'resources/html/partials/main.html'
+			templateUrl: 'resources/html/partials/view/main.html'
 		})
 		.when('/customer/search', {
 			controller: 'CustomerController',
-			templateUrl: 'resources/html/partials/customer_search.html'
+			templateUrl: 'resources/html/partials/view/customer_search.html'
 		})
 		.when('/login', {
 			controller: 'LoginController',
-			templateUrl: 'resources/html/partials/login.html'
+			templateUrl: 'resources/html/partials/view/login.html'
 		})
 		.otherwise({ redirectTo : "/main"});
 	
@@ -36,8 +33,12 @@ app.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpPr
                                 config: response.config,
                                 deferred: deferred
                             };
+
+                        $httpProvider.defaults.headers.common.Authorization = null;
+
                         $rootScope.requests401.push(req);
                         $rootScope.$broadcast('event:loginRequired');
+
                         return deferred.promise;
                     }
                     return $q.reject(response);
@@ -45,5 +46,4 @@ app.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpPr
             );
         };
     });
-    httpHeaders = $httpProvider.defaults.headers;
 }]);

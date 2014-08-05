@@ -1,26 +1,23 @@
-app.run(function($rootScope, $http, $location, Base64Service, editableOptions) {
+app.run(function($rootScope, $http, $location, Base64Service, AuthenticationService, editableOptions) {
 
     editableOptions.theme = 'bs3';
 
-	$rootScope.$on("$routeChangeStart", function() {
-        $http.get('user/authenticated/retrieve').success(function (data) {
-            $rootScope.user = data;
-        });
-	});
+    $rootScope.errors = [];
+    $rootScope.requests401 = [];
+    $rootScope.navigateTo = "/main";
 	
 	/**
      * Holds all the requests which failed due to 401 response.
      */
-    $rootScope.requests401 = [];
-
-    $rootScope.$on('event:loginRequired', function () {
+     $rootScope.$on('event:loginRequired', function () {
     	$rootScope.requests401 = [];
     	
     	if ($location.path().indexOf("/login") == -1) {
-    		originalLocation = $location.path();
-    		
-    		$rootScope.error = "Please enter a valid username / password";
+            $rootScope.navigateTo = $location.path();
     	}
+
+         // TODO: don't push message if already in array
+        $rootScope.errors.push({ message:"Please enter a valid username / password" });
    
         $location.path('/login');
     });
@@ -40,7 +37,9 @@ app.run(function($rootScope, $http, $location, Base64Service, editableOptions) {
         for (i = 0; i < requests.length; i += 1) {
             retry(requests[i]);
         }
+
         $rootScope.requests401 = [];
+        $rootScope.errors = [];
     });
 
     /**
@@ -48,20 +47,29 @@ app.run(function($rootScope, $http, $location, Base64Service, editableOptions) {
      */
     $rootScope.$on('event:loginRequest', function (event, username, password) {
     	// set the basic authentication header that will be parsed in the next request and used to authenticate
-        httpHeaders.common['Authorization'] = 'Basic ' + Base64Service.encode(username + ':' + password);
-        
-        $http.post('user/authenticate').success(function() {
-        	$rootScope.$broadcast('event:loginConfirmed');
-        	
-        	delete $rootScope.error;
-        });
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64Service.encode(username + ':' + password);
+
+        AuthenticationService.getAuthenticated().then(
+            function success(user) {
+                $rootScope.user = user;
+
+                $rootScope.$broadcast('event:loginConfirmed');
+
+                console.log("You have been successfully logged in.")
+            });
     });
 
     /**
      * On 'logoutRequest' invoke logout on the server.
      */
     $rootScope.$on('event:logoutRequest', function () {
-        httpHeaders.common['Authorization'] = null;
-        originalLocation = "/main";
+        $http.defaults.headers.common.Authorization = null;
+
+        AuthenticationService.logout().then(
+            function success() {
+                $rootScope.user = null;
+
+                console.log("You have been successfully logged out.")
+            });
     });
 });
