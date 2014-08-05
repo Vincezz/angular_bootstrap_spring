@@ -16,6 +16,10 @@ describe('AuthenticationService Tests', function (){
         });
     });
 
+    it('should have a login function', function () {
+        expect(angular.isFunction(AuthenticationService.login)).toBe(true);
+    });
+
     it('should have a logout function', function () {
         expect(angular.isFunction(AuthenticationService.logout)).toBe(true);
     });

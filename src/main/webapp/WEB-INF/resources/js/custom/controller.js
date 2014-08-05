@@ -1,6 +1,14 @@
-app.controller('MainController', function ($scope) {
+app.controller('MainController', function ($rootScope, $scope, $location) {
 	$scope.logout = function () {
 		$scope.$emit('event:logoutRequest');
+
+        $location.path("/main");
+    };
+
+    $scope.login = function (credentials) {
+        $scope.$emit('event:loginRequest', credentials.username, credentials.password);
+
+        $location.path($rootScope.navigateTo);
     };
 });
 
@@ -41,12 +49,5 @@ app.controller('CustomerController', function ($scope, CustomerService) {
                 });
             }
         });
-    };
-});
-
-app.controller('LoginController', function($rootScope, $scope, $location) {
-	$scope.login = function () {
-		$scope.$emit('event:loginRequest', $scope.username, $scope.password);
-		$location.path($rootScope.navigateTo);
     };
 });

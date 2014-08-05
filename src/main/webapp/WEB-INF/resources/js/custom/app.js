@@ -1,1 +1,1 @@
-var app = angular.module('app', ['ngRoute', 'xeditable']);
+var app = angular.module('app', ['ngRoute', 'xeditable', 'LocalStorageModule']);

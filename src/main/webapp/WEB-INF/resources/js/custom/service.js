@@ -30,27 +30,40 @@ app.service('CustomerService', function($http, $q) {
     };
 });
 
-app.service('AuthenticationService', function($http, $q) {
-    this.getAuthenticated = function () {
+app.service('AuthenticationService', function($http, $q, localStorageService) {
+    this.login = function () {
         var d = $q.defer();
 
         $http.get('user/authenticated')
-            .success(function (data) {
-                d.resolve(data);
+            .success(function (user) {
+                localStorageService.set('localStorageUser', user);
+
+                d.resolve();
+            })
+            .error(function () {
+                // TODO: handle error
+                d.reject();
             });
 
         return d.promise;
     };
 
-	this.logout = function() {
-		var d = $q.defer();
-		
-		$http.get('j_spring_security_logout').success(function() {
-			d.resolve();
-		});
-		
-		return d.promise;
-	};
+    this.logout = function () {
+        var d = $q.defer();
+
+        $http.get('j_spring_security_logout')
+            .success(function () {
+                localStorageService.remove('localStorageUser');
+
+                d.resolve();
+            })
+            .error(function () {
+                // TODO: handle error
+                d.reject();
+            });
+
+        return d.promise;
+    };
 });
 
 app.service('Base64Service', function () {

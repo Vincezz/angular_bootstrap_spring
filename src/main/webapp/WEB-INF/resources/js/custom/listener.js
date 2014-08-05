@@ -1,10 +1,14 @@
-app.run(function($rootScope, $http, $location, Base64Service, AuthenticationService, editableOptions) {
+app.run(function($rootScope, $http, $location, Base64Service, AuthenticationService, localStorageService, editableOptions) {
 
     editableOptions.theme = 'bs3';
 
     $rootScope.errors = [];
     $rootScope.requests401 = [];
     $rootScope.navigateTo = "/main";
+
+    $rootScope.$on('$routeChangeSuccess', function(event, next, current) {
+        $rootScope.user = localStorageService.get('localStorageUser');
+    });
 	
 	/**
      * Holds all the requests which failed due to 401 response.
@@ -50,9 +54,9 @@ app.run(function($rootScope, $http, $location, Base64Service, AuthenticationServ
     	// set the basic authentication header that will be parsed in the next request and used to authenticate
         $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64Service.encode(username + ':' + password);
 
-        AuthenticationService.getAuthenticated().then(
-            function success(user) {
-                $rootScope.user = user;
+        AuthenticationService.login().then(
+            function success() {
+                $rootScope.user = localStorageService.get('localStorageUser');
 
                 $rootScope.$broadcast('event:loginConfirmed');
 
@@ -68,7 +72,7 @@ app.run(function($rootScope, $http, $location, Base64Service, AuthenticationServ
 
         AuthenticationService.logout().then(
             function success() {
-                $rootScope.user = null;
+                $rootScope.user = localStorageService.get('localStorageUser');
 
                 console.log("You have been successfully logged out.")
             });

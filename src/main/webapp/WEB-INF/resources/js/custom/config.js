@@ -1,6 +1,11 @@
-app.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
-	
-	// ======= router configuration
+app.config([ '$routeProvider', '$httpProvider', 'localStorageServiceProvider', function($routeProvider, $httpProvider, localStorageServiceProvider) {
+
+    // ======= local storage configuration ========
+
+    localStorageServiceProvider.prefix = 'example';
+
+	// ======= router configuration =============
+
 	$routeProvider
 		.when('/main', {
 			templateUrl: 'resources/html/partials/view/main.html'
@@ -10,12 +15,11 @@ app.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpPr
 			templateUrl: 'resources/html/partials/view/customer_search.html'
 		})
 		.when('/login', {
-			controller: 'LoginController',
 			templateUrl: 'resources/html/partials/view/login.html'
 		})
 		.otherwise({ redirectTo : "/main"});
 	
-	// ======== http configuration
+	// ======== http configuration ===============
 	
 	//configure $http to view a login whenever a 401 unauthorized response arrives
     $httpProvider.responseInterceptors.push(function ($rootScope, $q) {
