@@ -16,8 +16,9 @@ app.run(function($rootScope, $http, $location, Base64Service, AuthenticationServ
             $rootScope.navigateTo = $location.path();
     	}
 
-         // TODO: don't push message if already in array
-        $rootScope.errors.push({ message:"Please enter a valid username / password" });
+        if(!containsError("LOGIN_REQ")) {
+            $rootScope.errors.push({ code: "LOGIN_REQ", message: "Please enter a valid username / password" });
+        }
    
         $location.path('/login');
     });
@@ -72,4 +73,13 @@ app.run(function($rootScope, $http, $location, Base64Service, AuthenticationServ
                 console.log("You have been successfully logged out.")
             });
     });
+
+    function containsError(code) {
+        for(var i in $rootScope.errors) {
+            if ($rootScope.errors[i].code == code) {
+                return true;
+            }
+        }
+        return false;
+    }
 });
