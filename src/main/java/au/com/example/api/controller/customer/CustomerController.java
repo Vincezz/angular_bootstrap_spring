@@ -22,6 +22,12 @@ public class CustomerController {
 	}
 
     @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
+    public Customer addCustomer(@RequestBody Customer customer) {
+        return customerService.addCustomer(customer);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public boolean deleteCustomer(@PathVariable Long id) {
         return customerService.deleteCustomer(id);

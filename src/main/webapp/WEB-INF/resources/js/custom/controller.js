@@ -19,6 +19,9 @@ app.controller('CustomerController', function ($scope, CustomerService) {
         });
 	};
 
+    $scope.add = function(id) {
+        CustomerService.addCustomer()
+    };
     $scope.delete = function(id) {
         CustomerService.deleteCustomer(id).then(function(response) {
             if(response) {

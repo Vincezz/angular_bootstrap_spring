@@ -19,6 +19,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
     @Override
+    public  Customer addCustomer(Customer customer) {
+        return  customerDao.addCustomer(customer);
+    }
+
+    @Override
     public boolean deleteCustomer(Long id) {
         return customerDao.deleteCustomer(id);
     }

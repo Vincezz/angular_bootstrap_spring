@@ -40,6 +40,12 @@ public class CustomerDaoImpl extends BaseDao implements CustomerDao {
 
     @Transactional
     @Override
+    public Customer addCustomer(Customer customer) {
+        return null;
+    }
+
+    @Transactional
+    @Override
     public boolean deleteCustomer(Long id) {
         boolean success = false;
 

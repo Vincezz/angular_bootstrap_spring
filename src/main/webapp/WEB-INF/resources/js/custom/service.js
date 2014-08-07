@@ -9,6 +9,16 @@ app.service('CustomerService', function($http, $q) {
 		return d.promise;
 	};
 
+    this.addCustomer = function(customer) {
+        var d = $q.defer();
+
+        $http.post('customer/add', customer).success(function(response) {
+            d.resolve(response);
+        });
+
+        return d.promise;
+    };
+
     this.deleteCustomer = function(id) {
         var d = $q.defer();
 

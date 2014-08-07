@@ -14,6 +14,10 @@ app.config([ '$routeProvider', '$httpProvider', 'localStorageServiceProvider', f
 			controller: 'CustomerController',
 			templateUrl: 'resources/html/partials/view/customer_search.html'
 		})
+        .when('/customer/create', {
+            controller: 'CustomerController',
+            templateUrl: 'resources/html/partials/view/customer_create.html'
+        })
 		.when('/login', {
 			templateUrl: 'resources/html/partials/view/login.html'
 		})
